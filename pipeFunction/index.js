@@ -1,10 +1,4 @@
-var pipe = function (value) {
-    var fns = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        fns[_i - 1] = arguments[_i];
-    }
-    return fns.reduce(function (acc, fn) { return fn(acc); }, value);
-};
+import * as pipe from "../utils/index";
 function add1(x) {
     return x + 1;
 }
@@ -20,25 +14,26 @@ function tap(x) {
     console.log("->", x);
     return x;
 }
-var functionalCalculation = function (x) {
+const functionalCalculation1 = (x) => {
     //types dont help for a specific value, we get an error, 0 is a valid number type
     try {
         return pipe(x, inverse, add1);
     }
     catch (e) {
         //type of e is unknown in strict mode
-        console.log("Error: ".concat(e.message));
+        console.log(`Error: ${e.message}`);
         return "Divide by 0 not possible";
     }
 };
 //Dirty dirty world
-function imperfectDirtyWorld() {
+function imperfectDirtyWorld1() {
     var _a;
-    var promptText = (_a = prompt("Give me a number to work with")) !== null && _a !== void 0 ? _a : "";
-    var promtNumber = Number(promptText);
+    const promptText = (_a = prompt("Give me a number to work with")) !== null && _a !== void 0 ? _a : "";
+    const promtNumber = Number(promptText);
     // our clean isolated function
-    var result = functionalCalculation(promtNumber);
+    const result = functionalCalculation1(promtNumber);
     // end our our isolated function
     alert(result);
 }
-imperfectDirtyWorld();
+imperfectDirtyWorld1();
+// export {};

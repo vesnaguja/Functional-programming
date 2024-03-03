@@ -1,4 +1,9 @@
+import * as pipe from "../utils/index.js";
+
 function invert(x: number) {
+  if (x === 0) {
+    throw new Error("zero_cant_be_divided");
+  }
   return 1 / x;
 }
 
@@ -23,7 +28,14 @@ function divideBy15(x: number) {
 
 // Add 10, increase by 5%, divide by 15, then find the reciprocal value —> all using higher-order functions
 function functionalCalculation2(x: number) {
-  return invert(divideBy15(add5Percentage(add10(x))));
+  // return invert(divideBy15(add5Percentage(add10(x))));
+  try {
+    return pipe(x, add10, add5Percentage, divideBy15, invert);
+  } catch (e: any) {
+    //type of e is unknown in strict mode
+    console.log(`Error: ${e.message}`);
+    return "Divide by 0 not possible";
+  }
 }
 
 // Dirty dirty world
